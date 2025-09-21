@@ -64,18 +64,27 @@ def get_funding_rates():
     funding_rates = {'BTCUSDT': 'N/A', 'ETHUSDT': 'N/A', 'SOLUSDT': 'N/A'}
     
     try:
+        print("Requesting Binance funding rates...")
         response = requests.get('https://fapi.binance.com/fapi/v1/premiumIndex', timeout=10)
+        print(f"Response status: {response.status_code}")
+        
         if response.status_code == 200:
             data = response.json()
+            print(f"Found {len(data)} symbols in response")
             
             for item in data:
                 if item['symbol'] in funding_rates:
                     rate = float(item['lastFundingRate']) * 100
                     funding_rates[item['symbol']] = f"{rate:.4f}%"
+                    print(f"Set funding rate for {item['symbol']}: {funding_rates[item['symbol']]}")
+        else:
+            print(f"Bad response: {response.text}")
                     
     except Exception as e:
         print(f"Error fetching funding rates: {e}")
+        print(f"Error type: {type(e)}")
     
+    print(f"Final funding rates: {funding_rates}")
     return funding_rates
 
 def log_crypto_data():
