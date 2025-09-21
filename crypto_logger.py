@@ -63,48 +63,55 @@ def get_funding_rates():
     """Get funding rates with multiple fallbacks"""
     funding_rates = {'BTC': 'N/A', 'ETH': 'N/A', 'SOL': 'N/A'}
     
-    # Try CoinGlass API first (free, no auth)
+    # Try Bybit public API (truly no auth required)
     try:
-        print("Requesting funding rates from CoinGlass...")
-        # CoinGlass aggregates funding rates from multiple exchanges
-        symbols = ['BTC', 'ETH', 'SOL']
+        print("Requesting funding rates from Bybit...")
         
-        for symbol in symbols:
+        # Bybit uses different symbol format
+        symbols_map = {
+            'BTCUSDT': 'BTC',
+            'ETHUSDT': 'ETH', 
+            'SOLUSDT': 'SOL'
+        }
+        
+        for bybit_symbol, our_symbol in symbols_map.items():
             try:
-                response = requests.get(f'https://open-api.coinglass.com/public/v2/funding?symbol={symbol}', timeout=10)
-                print(f"CoinGlass response for {symbol}: {response.status_code}")
+                # Get latest funding rate for each symbol
+                response = requests.get(f'https://api.bybit.com/v5/market/funding/history?category=linear&symbol={bybit_symbol}&limit=1', timeout=10)
+                print(f"Bybit response for {our_symbol}: {response.status_code}")
                 
                 if response.status_code == 200:
                     data = response.json()
-                    print(f"CoinGlass data structure for {symbol}: {data}")
+                    print(f"Bybit data structure for {our_symbol}: {data}")
                     
-                    # Try different possible data structures
-                    if 'data' in data:
-                        if isinstance(data['data'], list) and len(data['data']) > 0:
-                            funding_data = data['data'][0]
-                            if 'rate' in funding_data:
-                                rate = float(funding_data['rate']) * 100
-                                funding_rates[symbol] = f"{rate:.4f}%"
-                                print(f"Set funding rate for {symbol}: {funding_rates[symbol]}")
-                            elif 'fundingRate' in funding_data:
-                                rate = float(funding_data['fundingRate']) * 100
-                                funding_rates[symbol] = f"{rate:.4f}%"
-                                print(f"Set funding rate for {symbol}: {funding_rates[symbol]}")
-                        elif isinstance(data['data'], dict):
-                            if 'rate' in data['data']:
-                                rate = float(data['data']['rate']) * 100
-                                funding_rates[symbol] = f"{rate:.4f}%"
-                                print(f"Set funding rate for {symbol}: {funding_rates[symbol]}")
-                    
-                    # If still N/A, try parsing the raw response differently
-                    if funding_rates[symbol] == 'N/A':
-                        print(f"Could not parse CoinGlass response for {symbol}")
-                            
+                    if 'result' in data and 'list' in data['result'] and len(data['result']['list']) > 0:
+                        funding_info = data['result']['list'][0]
+                        if 'fundingRate' in funding_info:
+                            rate = float(funding_info['fundingRate']) * 100
+                            funding_rates[our_symbol] = f"{rate:.4f}%"
+                            print(f"Set funding rate for {our_symbol}: {funding_rates[our_symbol]}")
+                
             except Exception as symbol_error:
-                print(f"Failed to get {symbol} funding rate: {symbol_error}")
+                print(f"Failed to get {our_symbol} funding rate from Bybit: {symbol_error}")
                 
     except Exception as e:
-        print(f"CoinGlass API failed: {e}")
+        print(f"Bybit API failed: {e}")
+    
+    # If Bybit fails, try a simple approach with CoinMarketCap (they have some free endpoints)
+    if all(rate == 'N/A' for rate in funding_rates.values()):
+        try:
+            print("Trying alternative approach - manual fallback values...")
+            # As a last resort, we could set typical funding rate ranges
+            # This isn't ideal but gives users some indication
+            funding_rates = {
+                'BTC': 'Check Exchange',
+                'ETH': 'Check Exchange', 
+                'SOL': 'Check Exchange'
+            }
+            print("Set fallback message for funding rates")
+            
+        except Exception as fallback_error:
+            print(f"Fallback approach failed: {fallback_error}")
     
     # Final formatting for CSV columns
     final_rates = {}
