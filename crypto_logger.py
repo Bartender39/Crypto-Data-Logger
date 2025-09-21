@@ -76,13 +76,29 @@ def get_funding_rates():
                 
                 if response.status_code == 200:
                     data = response.json()
-                    if 'data' in data and len(data['data']) > 0:
-                        # Get the most common exchange (usually Binance)
-                        funding_data = data['data'][0]
-                        if 'rate' in funding_data:
-                            rate = float(funding_data['rate']) * 100
-                            funding_rates[symbol] = f"{rate:.4f}%"
-                            print(f"Set funding rate for {symbol}: {funding_rates[symbol]}")
+                    print(f"CoinGlass data structure for {symbol}: {data}")
+                    
+                    # Try different possible data structures
+                    if 'data' in data:
+                        if isinstance(data['data'], list) and len(data['data']) > 0:
+                            funding_data = data['data'][0]
+                            if 'rate' in funding_data:
+                                rate = float(funding_data['rate']) * 100
+                                funding_rates[symbol] = f"{rate:.4f}%"
+                                print(f"Set funding rate for {symbol}: {funding_rates[symbol]}")
+                            elif 'fundingRate' in funding_data:
+                                rate = float(funding_data['fundingRate']) * 100
+                                funding_rates[symbol] = f"{rate:.4f}%"
+                                print(f"Set funding rate for {symbol}: {funding_rates[symbol]}")
+                        elif isinstance(data['data'], dict):
+                            if 'rate' in data['data']:
+                                rate = float(data['data']['rate']) * 100
+                                funding_rates[symbol] = f"{rate:.4f}%"
+                                print(f"Set funding rate for {symbol}: {funding_rates[symbol]}")
+                    
+                    # If still N/A, try parsing the raw response differently
+                    if funding_rates[symbol] == 'N/A':
+                        print(f"Could not parse CoinGlass response for {symbol}")
                             
             except Exception as symbol_error:
                 print(f"Failed to get {symbol} funding rate: {symbol_error}")
@@ -90,36 +106,11 @@ def get_funding_rates():
     except Exception as e:
         print(f"CoinGlass API failed: {e}")
     
-    # Fallback: Try OKX API (also free, no auth)
-    if all(rate == 'N/A' for rate in funding_rates.values()):
-        try:
-            print("Trying OKX API fallback...")
-            response = requests.get('https://www.okx.com/api/v5/public/funding-rate?instType=SWAP', timeout=10)
-            print(f"OKX response status: {response.status_code}")
-            
-            if response.status_code == 200:
-                data = response.json()
-                if 'data' in data:
-                    for item in data['data']:
-                        inst_id = item.get('instId', '')
-                        if inst_id in ['BTC-USD-SWAP', 'BTC-USDT-SWAP']:
-                            rate = float(item['fundingRate']) * 100
-                            funding_rates['BTC'] = f"{rate:.4f}%"
-                        elif inst_id in ['ETH-USD-SWAP', 'ETH-USDT-SWAP']:
-                            rate = float(item['fundingRate']) * 100
-                            funding_rates['ETH'] = f"{rate:.4f}%"
-                        elif inst_id in ['SOL-USD-SWAP', 'SOL-USDT-SWAP']:
-                            rate = float(item['fundingRate']) * 100
-                            funding_rates['SOL'] = f"{rate:.4f}%"
-                            
-        except Exception as okx_error:
-            print(f"OKX API failed: {okx_error}")
-    
-    # Final fallback: Set to 'API Blocked' instead of 'N/A' to indicate the issue
+    # Final formatting for CSV columns
     final_rates = {}
-    final_rates['BTCUSDT'] = funding_rates['BTC'] if funding_rates['BTC'] != 'N/A' else 'API Blocked'
-    final_rates['ETHUSDT'] = funding_rates['ETH'] if funding_rates['ETH'] != 'N/A' else 'API Blocked' 
-    final_rates['SOLUSDT'] = funding_rates['SOL'] if funding_rates['SOL'] != 'N/A' else 'API Blocked'
+    final_rates['BTCUSDT'] = funding_rates['BTC']
+    final_rates['ETHUSDT'] = funding_rates['ETH'] 
+    final_rates['SOLUSDT'] = funding_rates['SOL']
     
     print(f"Final funding rates: {final_rates}")
     return final_rates
