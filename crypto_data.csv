@@ -3,4 +3,5 @@ Date,Time,Fear_Greed_Index,BTC_Price,BTC_Funding_Rate,BTC_Open_Interest,ETH_Pric
 2025-09-21,16:41:08,49,115415,,,4478.22,,,237.27,,
 2025-09-21,16:48:06,49,115444,API Blocked,,4475.66,API Blocked,,237.55,API Blocked,
 2025-09-21,16:55:19,49,115412,,,4472.46,,,237.43,,
-2025-09-21,17:00:27,49,115459,Check Exchange,N/A,4473.94,Check Exchange,N/A,237.5,Check Exchange,N/A
+2025-09-21,17:00:27,49,115459,Check Exchange,,4473.94,Check Exchange,,237.5,Check Exchange,
+2025-09-21,22:18:10,45,114424,Check Exchange,N/A,4305.61,Check Exchange,N/A,232.2,Check Exchange,N/A
