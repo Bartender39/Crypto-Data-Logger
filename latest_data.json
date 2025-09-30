@@ -1,14 +1,14 @@
 {
-  "Date": "2025-09-29",
-  "Time": "22:07:58",
+  "Date": "2025-09-30",
+  "Time": "03:51:14",
   "Fear_Greed_Index": "50",
-  "BTC_Price": 114528,
-  "BTC_Funding_Rate": "0.0066%",
+  "BTC_Price": 113540,
+  "BTC_Funding_Rate": "Check Exchange",
   "BTC_Open_Interest": "N/A",
-  "ETH_Price": 4203.14,
-  "ETH_Funding_Rate": "0.0013%",
+  "ETH_Price": 4173.95,
+  "ETH_Funding_Rate": "Check Exchange",
   "ETH_Open_Interest": "N/A",
-  "SOL_Price": 210.8,
-  "SOL_Funding_Rate": "-0.0122%",
+  "SOL_Price": 208.13,
+  "SOL_Funding_Rate": "Check Exchange",
   "SOL_Open_Interest": "N/A"
 }
