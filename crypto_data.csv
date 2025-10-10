@@ -58,4 +58,5 @@ Date,Time,Fear_Greed_Index,BTC_Price,BTC_Funding_Rate,BTC_Open_Interest,ETH_Pric
 2025-10-08,22:09:45,70,121894,Check Exchange,,4431.35,Check Exchange,,225.41,Check Exchange,
 2025-10-09,03:48:07,70,121367,Check Exchange,,4341.27,Check Exchange,,220.44,Check Exchange,
 2025-10-09,11:48:06,70,120816,Check Exchange,,4301.11,Check Exchange,,219.1,Check Exchange,
-2025-10-09,22:10:19,64,121016,Check Exchange,N/A,4350.9,Check Exchange,N/A,219.99,Check Exchange,N/A
+2025-10-09,22:10:19,64,121016,Check Exchange,,4350.9,Check Exchange,,219.99,Check Exchange,
+2025-10-10,03:46:25,64,121304,Check Exchange,N/A,4332.01,Check Exchange,N/A,218.66,Check Exchange,N/A
