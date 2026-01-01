@@ -1,14 +1,14 @@
 {
   "Date": "2025-12-31",
-  "Time": "10:12:20",
-  "Fear_Greed_Index": "21",
-  "BTC_Price": 87744,
+  "Time": "20:01:55",
+  "Fear_Greed_Index": "20",
+  "BTC_Price": 87805,
   "BTC_Funding_Rate": "Check Exchange",
   "BTC_Open_Interest": "N/A",
-  "ETH_Price": 2979.96,
+  "ETH_Price": 2979.37,
   "ETH_Funding_Rate": "Check Exchange",
   "ETH_Open_Interest": "N/A",
-  "SOL_Price": 125.24,
+  "SOL_Price": 124.99,
   "SOL_Funding_Rate": "Check Exchange",
   "SOL_Open_Interest": "N/A"
 }
