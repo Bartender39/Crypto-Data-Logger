@@ -797,4 +797,5 @@ Date,Time,Fear_Greed_Index,BTC_Price,BTC_Funding_Rate,BTC_Open_Interest,ETH_Pric
 2026-06-12,22:57:28,13,63519,Check Exchange,,1664.98,Check Exchange,,66.9,Check Exchange,
 2026-06-13,05:29:52,13,63747,Check Exchange,,1672.92,Check Exchange,,67.37,Check Exchange,
 2026-06-13,12:05:23,13,63952,Check Exchange,,1674.97,Check Exchange,,67.97,Check Exchange,
-2026-06-13,23:16:12,18,64468,Check Exchange,N/A,1680.15,Check Exchange,N/A,68.83,Check Exchange,N/A
+2026-06-13,23:16:12,18,64468,Check Exchange,,1680.15,Check Exchange,,68.83,Check Exchange,
+2026-06-14,05:49:04,18,64535,Check Exchange,N/A,1674.51,Check Exchange,N/A,68.31,Check Exchange,N/A
