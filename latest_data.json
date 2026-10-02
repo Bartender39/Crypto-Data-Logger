@@ -1,14 +1,14 @@
 {
-  "Date": "2026-10-01",
-  "Time": "23:33:43",
+  "Date": "2026-10-02",
+  "Time": "09:30:21",
   "Fear_Greed_Index": "72",
-  "BTC_Price": 86721,
+  "BTC_Price": 86210,
   "BTC_Funding_Rate": "Check Exchange",
   "BTC_Open_Interest": "N/A",
-  "ETH_Price": 2741.48,
+  "ETH_Price": 2732.48,
   "ETH_Funding_Rate": "Check Exchange",
   "ETH_Open_Interest": "N/A",
-  "SOL_Price": 122.26,
+  "SOL_Price": 121.91,
   "SOL_Funding_Rate": "Check Exchange",
   "SOL_Open_Interest": "N/A"
 }
